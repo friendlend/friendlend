@@ -2,8 +2,9 @@ import React from 'react';
 import { db, auth, firebase } from '../firebase';
 const UserContext = React.createContext();
 
+export const signout = auth().signOut;
 export function UserProvider(props) {
-	const user = useAuth();
+	const { user, setUser } = useAuth();
 	const handleGoogleSignIn = async () => {
 		const provider = new firebase.auth.GoogleAuthProvider();
 		try {
@@ -13,7 +14,10 @@ export function UserProvider(props) {
 		}
 	};
 	return (
-		<UserContext.Provider value={{ user, handleGoogleSignIn }} {...props} />
+		<UserContext.Provider
+			value={{ user, handleGoogleSignIn, setUser }}
+			{...props}
+		/>
 	);
 }
 
@@ -26,9 +30,10 @@ export function useUser() {
 }
 const storedUser = JSON.parse(localStorage.getItem('user'));
 function useAuth() {
-	const [user, setUser] = React.useState(storedUser);
+	const [user, setUser] = React.useState(storedUser || null);
 	React.useEffect(() => {
 		return auth().onAuthStateChanged(auth => {
+			console.log(auth);
 			if (auth) {
 				const { displayName, photoURL, uid } = auth;
 				const user = {
@@ -46,5 +51,5 @@ function useAuth() {
 			}
 		});
 	}, []);
-	return user;
+	return { user, setUser };
 }

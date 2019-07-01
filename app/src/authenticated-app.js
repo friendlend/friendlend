@@ -1,8 +1,11 @@
 import React from 'react';
 import { Router, Redirect } from '@reach/router';
+import { signout } from './context/auth-context';
+import { auth } from 'firebase';
 const AuthenticatedApp = () => {
 	return (
 		<div>
+			<Nav />
 			<p>Authenticated!</p>
 			<Routes />
 		</div>
@@ -18,7 +21,9 @@ function Routes() {
 		</Router>
 	);
 }
-
+function Nav() {
+	return <button onClick={() => auth().signOut()}>signout</button>;
+}
 function Placeholder() {
 	return <p>Placeholder Page</p>;
 }
