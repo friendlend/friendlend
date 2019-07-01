@@ -1,7 +1,16 @@
 import React from 'react';
 import { db, auth, firebase } from '../firebase';
 const UserContext = React.createContext();
+export function fetchDoc(path) {
+	return db
+		.doc(path)
+		.get()
+		.then(doc => doc.data());
+}
 
+export function fetchUser(uid) {
+	return fetchDoc(`users/${uid}`);
+}
 export const signout = auth().signOut;
 export function UserProvider(props) {
 	const { user, setUser } = useAuth();
@@ -32,20 +41,29 @@ const storedUser = JSON.parse(localStorage.getItem('user'));
 function useAuth() {
 	const [user, setUser] = React.useState(storedUser || null);
 	React.useEffect(() => {
-		return auth().onAuthStateChanged(auth => {
+		return auth().onAuthStateChanged(async auth => {
 			console.log(auth);
 			if (auth) {
-				const { displayName, photoURL, uid } = auth;
-				const user = {
-					displayName,
-					photoURL,
-					uid,
-				};
-				localStorage.setItem('user', JSON.stringify(user));
-				setUser(user);
-				db.collection('users')
-					.doc(user.uid)
-					.set(user, { merge: true });
+				const { displayName, email, photoURL, uid } = auth;
+				if (displayName) {
+					const googleUser = {
+						displayName,
+						photoURL,
+						uid,
+					};
+					localStorage.setItem('user', JSON.stringify(googleUser));
+					setUser(googleUser);
+					db.collection('users')
+						.doc(googleUser.uid)
+						.set(googleUser, { merge: true });
+				} else {
+					const emailUser = { email, uid };
+					localStorage.setItem('user', JSON.stringify(emailUser));
+					setUser(emailUser);
+					db.collection('users')
+						.doc(emailUser.uid)
+						.set(emailUser, { merge: true });
+				}
 			} else {
 				setUser(null);
 			}
