@@ -20,10 +20,6 @@ export default function CardForm() {
     });
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-  };
-
   // takes the form field value and returns true on valid number
   function valid_credit_card(value) {
     // accept only digits, dashes or spaces
@@ -55,53 +51,62 @@ export default function CardForm() {
       <StyledCardForm>
         <h2>Where should we send the money?</h2>
         <div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={e => e.preventDefault()}>
             <div>
               <div className={"name"}>
-                <p>Name on card</p>
-                <input
-                  onChange={handleChange}
-                  name={"name"}
-                  value={cardInfo.name}
-                />
+                <label>
+                  <p>Name on card</p>
+                  <input
+                    onChange={handleChange}
+                    name={"name"}
+                    value={cardInfo.name}
+                  />
+                </label>
               </div>
 
               <div className={"cvs"}>
-                <p>CVS</p>
-                <input
-                  maxLength={"3"}
-                  onChange={handleChange}
-                  name={"cvs"}
-                  value={cardInfo.cvs}
-                />
+                <label>
+                  <p>CVS</p>
+                  <input
+                    maxLength={"3"}
+                    onChange={handleChange}
+                    name={"cvs"}
+                    value={cardInfo.cvs}
+                  />
+                </label>
               </div>
             </div>
 
-            <p>Card Number</p>
-            <input
-              name={"cardNumber"}
-              placeholder={"xxxx-xxxx-xxxx-xxxx"}
-              value={cardInfo.cardNumber}
-              onChange={handleChange}
-            />
-            {
-              <small>
-                {valid_credit_card(cardInfo.cardNumber)
-                  ? null
-                  : "Invalid Credit Card"}
-              </small>
-            }
+            <label>
+              <p>Card Number</p>
+              <input
+                name={"cardNumber"}
+                placeholder={"xxxx-xxxx-xxxx-xxxx"}
+                value={cardInfo.cardNumber}
+                onChange={handleChange}
+              />
+              {
+                <small>
+                  {valid_credit_card(cardInfo.cardNumber)
+                    ? null
+                    : "Invalid Credit Card"}
+                </small>
+              }
+            </label>
 
             <p>Expire Date</p>
             <div className="expireDate">
               <div>
-                <p>Month</p>
-
-                <input value={cardInfo.month} onChange={handleChange} />
+                <label>
+                  <p>Month</p>
+                  <input value={cardInfo.month} onChange={handleChange} />
+                </label>
               </div>
               <div>
-                <p>Year</p>
-                <input value={cardInfo.year} onChange={handleChange} />
+                <label>
+                  <p>Year</p>
+                  <input value={cardInfo.year} onChange={handleChange} />
+                </label>
               </div>
             </div>
 

@@ -29,7 +29,7 @@ export const StyledCardForm = styled.div`
     width: 15%;
   }
 
-  div > p {
+  div > label > p {
     margin: 0;
   }
 
@@ -39,7 +39,7 @@ export const StyledCardForm = styled.div`
     display: flex;
   }
 
-  form > p {
+  form > label > p {
     margin-bottom: 0;
   }
 
