@@ -1,5 +1,5 @@
 import React from 'react';
-import { db, auth, firebase } from './firebase';
+import { db, auth, firebase } from '../firebase';
 const UserContext = React.createContext();
 
 export function UserProvider(props) {

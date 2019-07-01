@@ -1,7 +1,13 @@
 import React from 'react';
-
+import { useUser } from './context/auth-context';
 const UnAuthenticatedApp = () => {
-	return <div>UNNNNNAuthenticated!</div>;
+	const { handleGoogleSignIn } = useUser();
+	return (
+		<div>
+			<p>UNNNNNAuthenticated!</p>
+			<button onClick={handleGoogleSignIn}>Sign in with Google</button>
+		</div>
+	);
 };
 
 export default UnAuthenticatedApp;

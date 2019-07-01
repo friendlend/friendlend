@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { UserProvider } from './unauthenticated-app';
-
+import { UserProvider } from './context/auth-context';
 ReactDOM.render(
 	<UserProvider>
 		<App />
