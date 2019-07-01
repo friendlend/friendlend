@@ -1,7 +1,10 @@
 import React from 'react';
-
+import AuthenticatedApp from './authenticated-app';
+import UnAuthenticatedApp from './unauthenticated-app';
+import { useUser } from './context/auth-context';
 function App() {
-  return <h1>Friend Lend</h1>;
+	const { user } = useUser();
+	return user ? <AuthenticatedApp /> : <UnAuthenticatedApp />;
 }
 
 export default App;
