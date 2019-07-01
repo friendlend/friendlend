@@ -23,3 +23,22 @@ exports.createStripeCustomer = functions.https.onCall(async data => {
     };
   }
 });
+
+exports.createStripeCard = functions.https.onCall(async data => {
+  try {
+    const card = await stripe.customers.createSource(data.stripeId, {
+      source: data.token,
+    });
+    await db.doc(`users/${data.id}`).update({ stripeCardId: card.id });
+    return {
+      success: true,
+      stripeCardId: card.id,
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      success: false,
+      error: err,
+    };
+  }
+});
