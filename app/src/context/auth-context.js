@@ -1,16 +1,7 @@
 import React from 'react';
 import { db, auth, firebase } from '../firebase';
 const UserContext = React.createContext();
-export function fetchDoc(path) {
-	return db
-		.doc(path)
-		.get()
-		.then(doc => doc.data());
-}
 
-export function fetchUser(uid) {
-	return fetchDoc(`users/${uid}`);
-}
 export const signout = auth().signOut;
 export function UserProvider(props) {
 	const { user, setUser } = useAuth();
@@ -42,6 +33,10 @@ function useAuth() {
 	const [user, setUser] = React.useState(storedUser || null);
 	React.useEffect(() => {
 		return auth().onAuthStateChanged(async auth => {
+			// Different auth providers return different data about a user
+			// so I'm determining what kind of user we have by the displayName field (google)
+			// and setting user info based on that.
+			// for other info like name,preferences, etc. we'll have to update the user created here
 			console.log(auth);
 			if (auth) {
 				const { displayName, email, photoURL, uid } = auth;

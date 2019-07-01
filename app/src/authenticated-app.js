@@ -1,6 +1,5 @@
 import React from 'react';
 import { Router, Redirect } from '@reach/router';
-import { signout } from './context/auth-context';
 import { auth } from 'firebase';
 const AuthenticatedApp = () => {
 	return (
