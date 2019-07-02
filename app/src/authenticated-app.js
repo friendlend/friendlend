@@ -1,10 +1,11 @@
-import { Redirect, Router } from '@reach/router';
+import { Redirect, Router, Link } from '@reach/router';
 import React from 'react';
 import CardForm from './component/CardForm/CardForm';
-import { auth, db } from './firebase';
+import { auth } from './firebase';
 const AuthenticatedApp = () => {
 	return (
 		<div>
+			<Nav />
 			<p>Authenticated!</p>
 			<Routes />
 		</div>
@@ -22,7 +23,13 @@ function Routes() {
 	);
 }
 function Nav() {
-	return <button onClick={() => auth().signOut()}>signout</button>;
+	return (
+		<>
+			<Link to="/cardform">CardForm</Link>
+			<Link to="/">Home</Link>
+			<button onClick={() => auth().signOut()}>signout</button>
+		</>
+	);
 }
 function Placeholder() {
 	return <p>Placeholder Page</p>;
