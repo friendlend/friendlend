@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
+import { navigate } from '@reach/router';
 import transfer from '../images/transfer.svg';
 import styled from 'styled-components';
 const Img = styled.img`
@@ -10,7 +11,7 @@ const Img = styled.img`
 	margin-bottom: 20px;
 `;
 
-const LandingPage = ({ navigate }) => {
+const LandingPage = () => {
 	const fade = useSpring({ opacity: 1, from: { opacity: 0 }, delay: 600 });
 	const fade2 = useSpring({ opacity: 1, from: { opacity: 0 }, delay: 1050 });
 	return (
@@ -19,7 +20,7 @@ const LandingPage = ({ navigate }) => {
 				{/* <button onClick={() => navigate('/signup')}>Request Money</button>
 				<p>or</p>
         <button onClick={() => navigate('/login')}>Log In</button> */}
-				<Button>Get Started</Button>
+				<Button onClick={() => navigate('/signup')}>Get Started</Button>
 			</NavWrapper>
 			<animated.div style={fade}>
 				<H1>Welcome to Friend Lend!</H1>
