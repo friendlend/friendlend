@@ -30,6 +30,6 @@ function NotFound() {
 	return <p>Not found</p>;
 }
 function Redirector() {
-	return <Redirect to="/something" />;
+	return <Redirect to="/dashboard" />;
 }
 export default AuthenticatedApp;

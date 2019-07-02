@@ -1,10 +1,20 @@
 import React from 'react';
 import { db, auth, firebase } from '../firebase';
 const UserContext = React.createContext();
+export function fetchDoc(path) {
+	return db
+		.doc(path)
+		.get()
+		.then(doc => doc.data());
+}
 
+export function fetchUser(uid) {
+	return fetchDoc(`users/${uid}`);
+}
 export const signout = auth().signOut;
+
 export function UserProvider(props) {
-	const { user, setUser } = useAuth();
+	const user = useAuth();
 	const handleGoogleSignIn = async () => {
 		const provider = new firebase.auth.GoogleAuthProvider();
 		try {
@@ -14,10 +24,7 @@ export function UserProvider(props) {
 		}
 	};
 	return (
-		<UserContext.Provider
-			value={{ user, handleGoogleSignIn, setUser }}
-			{...props}
-		/>
+		<UserContext.Provider value={{ user, handleGoogleSignIn }} {...props} />
 	);
 }
 
@@ -30,39 +37,39 @@ export function useUser() {
 }
 const storedUser = JSON.parse(localStorage.getItem('user'));
 function useAuth() {
-	const [user, setUser] = React.useState(storedUser || null);
+	const [user, setUser] = React.useState(
+		JSON.parse(window.localStorage.getItem('user') || null)
+	);
 	React.useEffect(() => {
-		return auth().onAuthStateChanged(async auth => {
-			// Different auth providers return different data about a user
-			// so I'm determining what kind of user we have by the displayName field (google)
-			// and setting user info based on that.
-			// for other info like name,preferences, etc. we'll have to update the user created here
-			console.log(auth);
-			if (auth) {
-				const { displayName, email, photoURL, uid } = auth;
-				if (displayName) {
-					const googleUser = {
-						displayName,
-						photoURL,
-						uid,
+		return firebase.auth().onAuthStateChanged(async firebaseUser => {
+			if (firebaseUser) {
+				const updatedUser = await fetchUser(firebaseUser.uid);
+				if (updatedUser) {
+					const currentUser = {
+						...updatedUser,
 					};
-					localStorage.setItem('user', JSON.stringify(googleUser));
-					setUser(googleUser);
+					setUser(currentUser);
+					window.localStorage.setItem('user', JSON.stringify(currentUser));
 					db.collection('users')
-						.doc(googleUser.uid)
-						.set(googleUser, { merge: true });
-				} else {
-					const emailUser = { email, uid };
-					localStorage.setItem('user', JSON.stringify(emailUser));
-					setUser(emailUser);
+						.doc(currentUser.uid)
+						.set(currentUser, { merge: true });
+				} else if (firebaseUser) {
+					const newUser = {
+						displayName: firebaseUser.displayName,
+						photoUrl: firebaseUser.photoURL,
+						uid: firebaseUser.uid,
+						email: firebaseUser.email,
+					};
+					setUser(newUser);
+					window.localStorage.setItem('user', JSON.stringify(newUser));
 					db.collection('users')
-						.doc(emailUser.uid)
-						.set(emailUser, { merge: true });
+						.doc(newUser.uid)
+						.set(newUser, { merge: true });
 				}
 			} else {
 				setUser(null);
 			}
 		});
 	}, []);
-	return { user, setUser };
+	return user;
 }
