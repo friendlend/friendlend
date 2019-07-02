@@ -7,6 +7,7 @@ import * as mq from './styles/media-queries';
 import Bailout from './Bailout';
 import { auth } from './firebase';
 import Dashboard from './Dashboard';
+import LandingPage from './component/LandingPage';
 const Container = styled.div`
 	transition: box-shadow 0.3s;
 	border-radius: 10px;
@@ -50,6 +51,7 @@ function Routes() {
 			<ToLoan path="/SetUpLoan" />
 			<Dashboard path="/dashboard" />
 			<Bailout path="/request/:id" />
+			<LandingPage path="/" />
 			<NotFound default />
 		</Router>
 	);
