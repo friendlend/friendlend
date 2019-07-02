@@ -59,10 +59,10 @@ const SignUp = ({ navigate }) => {
         .functions()
         .httpsCallable('createStripeCustomer');
 
-      const stripe = await createStripeCustomer({
-        email: signupForm.email,
+      await createStripeCustomer({
+        email: user.email,
         id: user.uid,
-        name: signupForm.name,
+        name: user.displayName,
       });
       navigate('/SetUpLoan');
     } catch (err) {
