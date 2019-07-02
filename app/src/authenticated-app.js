@@ -1,13 +1,12 @@
+import { Link, Redirect, Router } from '@reach/router';
 import React from 'react';
-import { Redirect, Router, Link } from '@reach/router';
 import styled from 'styled-components';
-import CardForm from './component/CardForm/CardForm';
-import * as mq from './styles/media-queries';
-import { auth } from './firebase';
+import CardForm from './component/CardForm/CheckoutPage';
 import SetUpLoan from './setUpLoan.js';
-import Dashboard from './Dashboard';
+import * as mq from './styles/media-queries';
 import Bailout from './Bailout';
-
+import { auth } from './firebase';
+import Dashboard from './Dashboard';
 const Container = styled.div`
 	transition: box-shadow 0.3s;
 	border-radius: 10px;
