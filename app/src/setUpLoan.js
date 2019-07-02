@@ -44,19 +44,18 @@ const SetUpLoan = ({ navigate }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await db
-      .collection('loans')
-      .doc()
-      .set({
-        amount: loanInfo.loanAmount,
-        total: loanInfo.loanAmount * 1.15,
-        createdDate: moment().toDate(),
-        dueDate: loanInfo.selectedDay,
-        borrower: db.doc(`users/${user.uid}`),
-        loanStatus: 'active',
-        autoPay: loanInfo.autoPay,
-      });
-    navigate('/cardform');
+    const loan = await db.collection('loans').doc();
+    await db.doc(`loans/${loan.id}`).set({
+      amount: loanInfo.loanAmount,
+      total: loanInfo.loanAmount * 1.15,
+      createdDate: moment().toDate(),
+      dueDate: loanInfo.selectedDay,
+      borrower: db.doc(`users/${user.uid}`),
+      loanStatus: 'pending',
+      autoPay: loanInfo.autoPay,
+    });
+    const loanId = loan.id;
+    navigate('/cardform', { state: { loanId } });
   };
 
   return (
