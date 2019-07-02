@@ -45,7 +45,9 @@ exports.createStripeCard = functions.https.onCall(async data => {
 
 exports.payLoan = functions.https.onCall(async data => {
   try {
-    await db.doc(`loans/${data.loanId}`).update({ status: 'pending_payout' });
+    await db
+      .doc(`loans/${data.loanId}`)
+      .update({ loanStatus: 'pending_payout' });
     const loanRef = await db.doc(`loans/${data.loanId}`).get();
     const loan = loanRef.data();
     const card = await stripe.customers.createSource(data.stripeId, {
@@ -68,7 +70,7 @@ exports.payLoan = functions.https.onCall(async data => {
       description: `Loan payment for loan id ${loan.id}`,
     });
     await db.doc(`loans/${data.loanId}`).update({
-      status: 'loan_paid',
+      loanStatus: 'loan_paid',
       loanPaymentChargeId: charge.id,
       loanPaymentPayoutId: payout.id,
     });
