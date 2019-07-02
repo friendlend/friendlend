@@ -1,6 +1,6 @@
-import { Redirect, Router } from "@reach/router";
-import React from "react";
-import CardForm from "./component/CardForm/CardForm";
+import { Redirect, Router } from '@reach/router';
+import React from 'react';
+import CardForm from './component/CardForm/CardForm';
 const AuthenticatedApp = () => {
   return (
     <div>
@@ -14,9 +14,9 @@ function Routes() {
   return (
     <Router>
       {/* <Redirector path="/" /> */}
-      <Placeholder path="/" />
+      <Placeholder path='/' />
       <NotFound default />
-      <CardForm path="/cardform" />
+      <CardForm path='/cardform' />
     </Router>
   );
 }
@@ -28,6 +28,6 @@ function NotFound() {
   return <p>Not found</p>;
 }
 function Redirector() {
-  return <Redirect to="/something" />;
+  return <Redirect to='/something' />;
 }
 export default AuthenticatedApp;

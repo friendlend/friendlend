@@ -9,6 +9,7 @@
     "react-date-picker": "^7.5.1",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
+    "react-stripe-elements": "^3.0.0",
     "styled-components": "^4.3.2"
   },
   "scripts": {
