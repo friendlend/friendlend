@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import { Redirect, Router } from '@reach/router';
-import React from 'react';
-import CardForm from './component/CardForm/CardForm';
-=======
 import React from 'react';
 import { Redirect, Router, Link } from '@reach/router';
 import styled from 'styled-components';
@@ -22,7 +17,6 @@ const Container = styled.div`
 		background-color: yellow;
 	}
 `;
->>>>>>> c78a10ca1c31b04f0c9b01ec27890e8d995d2089
 const AuthenticatedApp = () => {
 	return (
 		<Container>
@@ -34,16 +28,6 @@ const AuthenticatedApp = () => {
 };
 
 function Routes() {
-<<<<<<< HEAD
-  return (
-    <Router>
-      {/* <Redirector path="/" /> */}
-      <Placeholder path='/' />
-      <NotFound default />
-      <CardForm path='/cardform' />
-    </Router>
-  );
-=======
 	return (
 		<Router>
 			{/* <Redirector path="/" /> */}
@@ -61,7 +45,6 @@ function Nav() {
 			<button onClick={() => auth().signOut()}>signout</button>
 		</>
 	);
->>>>>>> c78a10ca1c31b04f0c9b01ec27890e8d995d2089
 }
 function Placeholder() {
 	return <p>Placeholder Page</p>;
@@ -70,10 +53,6 @@ function NotFound() {
 	return <p>Not found</p>;
 }
 function Redirector() {
-<<<<<<< HEAD
-  return <Redirect to='/something' />;
-=======
 	return <Redirect to="/something" />;
->>>>>>> c78a10ca1c31b04f0c9b01ec27890e8d995d2089
 }
 export default AuthenticatedApp;
