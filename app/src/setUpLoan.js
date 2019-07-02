@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import DayPicker from "react-day-picker";
-import "react-day-picker/lib/style.css";
-import "./setUpLoan.css";
-import ReactNumeric from "react-numeric";
+import React, { Component } from 'react';
+import DayPicker from 'react-date-picker';
+// import 'react-day-picker/lib/style.css';
+import './setUpLoan.css';
+import ReactNumeric from 'react-numeric';
 
 class SetUpLoan extends Component {
   constructor() {
@@ -11,25 +11,25 @@ class SetUpLoan extends Component {
     this.state = {
       loanAmount: 0,
       selectedDay: null,
-      autoPay: false
+      autoPay: false,
     };
   }
 
   handleDayClick(day, { selected }) {
     this.setState({
       ...this.state,
-      selectedDay: selected ? undefined : day
+      selectedDay: selected ? undefined : day,
     });
   }
 
   handleChanges = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   handleCheckbox() {
-    let checkBox = document.getElementById("myCheck");
+    let checkBox = document.getElementById('myCheck');
 
     if (checkBox.checked == true) {
       this.setState({ ...this.state, autoPay: true });
@@ -40,24 +40,24 @@ class SetUpLoan extends Component {
 
   render() {
     return (
-      <div className="center" name>
+      <div className='center' name>
         <p>Loan Amount:</p>
         <ReactNumeric
           value={this.state.loanAmount}
           preDefined={{
             allowDecimalPadding: false,
-            currencySymbol: "$",
+            currencySymbol: '$',
             decimalPlaces: 0,
             decimalPlacesRawValue: 0,
-            maximumValue: "1000",
-            minimumValue: "0",
-            outputFormat: "number",
-            unformatOnSubmit: true
+            maximumValue: '1000',
+            minimumValue: '0',
+            outputFormat: 'number',
+            unformatOnSubmit: true,
           }}
           onChange={(event, value) =>
             this.setState({
               ...this.state,
-              loanAmount: value
+              loanAmount: value,
             })
           }
         />
@@ -70,9 +70,9 @@ class SetUpLoan extends Component {
           selectedDays={this.state.selectedDay}
           onDayClick={this.handleDayClick}
         />
-        <div className="checkBox">
+        <div className='checkBox'>
           <p>Have loan automatically paid back on selected date?</p>
-          <input type="checkbox" id="myCheck" onclick="myFunction()" />
+          <input type='checkbox' id='myCheck' onclick='myFunction()' />
         </div>
         <button>Continue</button>
       </div>

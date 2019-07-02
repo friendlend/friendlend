@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { StyledCardForm } from "./CardForm.styled";
+import React, { useState } from 'react';
+import { StyledCardForm } from './CardForm.styled';
 
 export default function CardForm() {
   const [cardInfo, setCardInfo] = useState({
-    name: "",
-    cvs: "",
-    cardNumber: "",
-    month: "0" + (new Date().getMonth() + 1),
+    name: '',
+    cvs: '',
+    cardNumber: '',
+    month: '0' + (new Date().getMonth() + 1),
     year: new Date()
       .getFullYear()
       .toString()
-      .substr(-2)
+      .substr(-2),
   });
 
   const handleChange = e => {
@@ -29,7 +29,7 @@ export default function CardForm() {
     var nCheck = 0,
       nDigit = 0,
       bEven = false;
-    value = value.replace(/\D/g, "");
+    value = value.replace(/\D/g, '');
 
     for (var n = value.length - 1; n >= 0; n--) {
       var cDigit = value.charAt(n),
@@ -53,24 +53,24 @@ export default function CardForm() {
         <div>
           <form onSubmit={e => e.preventDefault()}>
             <div>
-              <div className={"name"}>
+              <div className={'name'}>
                 <label>
                   <p>Name on card</p>
                   <input
                     onChange={handleChange}
-                    name={"name"}
+                    name={'name'}
                     value={cardInfo.name}
                   />
                 </label>
               </div>
 
-              <div className={"cvs"}>
+              <div className={'cvs'}>
                 <label>
                   <p>CVS</p>
                   <input
-                    maxLength={"3"}
+                    maxLength={'3'}
                     onChange={handleChange}
-                    name={"cvs"}
+                    name={'cvs'}
                     value={cardInfo.cvs}
                   />
                 </label>
@@ -80,8 +80,8 @@ export default function CardForm() {
             <label>
               <p>Card Number</p>
               <input
-                name={"cardNumber"}
-                placeholder={"xxxx-xxxx-xxxx-xxxx"}
+                name={'cardNumber'}
+                placeholder={'xxxx-xxxx-xxxx-xxxx'}
                 value={cardInfo.cardNumber}
                 onChange={handleChange}
               />
@@ -89,13 +89,13 @@ export default function CardForm() {
                 <small>
                   {valid_credit_card(cardInfo.cardNumber)
                     ? null
-                    : "Invalid Credit Card"}
+                    : 'Invalid Credit Card'}
                 </small>
               }
             </label>
 
             <p>Expire Date</p>
-            <div className="expireDate">
+            <div className='expireDate'>
               <div>
                 <label>
                   <p>Month</p>
