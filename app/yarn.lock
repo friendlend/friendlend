@@ -2059,6 +2059,11 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+autonumeric@^4.4.0, autonumeric@^4.5.4:
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/autonumeric/-/autonumeric-4.5.4.tgz#9af584e4a3a41b1ddb7f7857756fe865099110c4"
+  integrity sha512-tdPvLHB3QoJ3SZnjb6MD34tXOtn1aKb53if3eWQmAe3rEWfONKgSzvn2ZdigQRYHYf2Sr76JSmWjia/mY1KehQ==
+
 autoprefixer@^9.4.9:
   version "9.5.1"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.5.1.tgz#243b1267b67e7e947f28919d786b50d3bb0fb357"
@@ -8479,6 +8484,13 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-numeric@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-numeric/-/react-numeric-1.0.0.tgz#eb6654c95c0d97a62832bf5f2f2ae190f93f422b"
+  integrity sha512-Xo8TTnqFbxxHM/huxgNYrXro/TmInq/MgBUYcq9cf5ZsOTSP7ggbxRtXvyMZZdKEgdj6CPTF5VKpKU9lTqRdcw==
+  dependencies:
+    autonumeric "^4.4.0"
 
 react-scripts@3.0.1:
   version "3.0.1"
