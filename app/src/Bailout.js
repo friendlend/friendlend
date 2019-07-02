@@ -1,5 +1,13 @@
 import React from 'react';
 import { navigate } from '@reach/router';
+import styled from 'styled-components';
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+`;
 const fakeRequest = {
 	person: 'Austen Allred',
 	amount: '$30,000',
@@ -8,18 +16,33 @@ const fakeRequest = {
 };
 const Bailout = () => {
 	return (
-		<div>
-			<h1>{fakeRequest.person} needs your support</h1>
-			<p>
+		<Container>
+			<P>
 				{fakeRequest.person} needs{' '}
 				<strong>
 					{fakeRequest.amount} which they can pay back on{' '}
 					{fakeRequest.payback_date}
 				</strong>
-			</p>
-			<button onClick={() => navigate('/cardform')}>Bail them out?</button>
-		</div>
+			</P>
+			<Button onClick={() => navigate('/cardform')}>Bail them out?</Button>
+		</Container>
 	);
 };
-
+const P = styled.p`
+	font-size: 1.6rem;
+`;
+const Button = styled.button`
+	width: 160px;
+	height: 53px;
+	cursor: pointer;
+	border-radius: 5px;
+	font-size: 17px;
+	padding: 8px;
+	color: white;
+	background-color: #4f455e;
+	margin-top: 20px;
+	&:hover {
+		opacity: 0.7;
+	}
+`;
 export default Bailout;
