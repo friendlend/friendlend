@@ -1,12 +1,31 @@
 import React from "react";
-import { Router, Redirect } from "@reach/router";
+import { Redirect, Router, Link } from "@reach/router";
+import styled from "styled-components";
+import CardForm from "./component/CardForm/CardForm";
+import * as mq from "./styles/media-queries";
+import { auth } from "./firebase";
 import SetUpLoan from "./setUpLoan.js";
+
+console.log(mq);
+const Container = styled.div`
+  display: grid;
+  width: 100%;
+  max-width: 880px;
+  grid-gap: 1em;
+  margin: 0 auto;
+  border: 2px solid black;
+  ${mq.small} {
+    border: 2px solid rebeccapurple;
+    background-color: yellow;
+  }
+`;
 const AuthenticatedApp = () => {
   return (
-    <div>
-      {/* <p>Authenticated!</p> */}
+    <Container>
+      <Nav />
+      <p>Authenticated!</p>
       <Routes />
-    </div>
+    </Container>
   );
 };
 
@@ -15,9 +34,19 @@ function Routes() {
     <Router>
       {/* <Redirector path="/" /> */}
       <Placeholder path="/" />
-      <ToLoan path="/SetUpLoan" />
       <NotFound default />
+      <CardForm path="/cardform" />
+      <ToLoan path="/SetUpLoan" />
     </Router>
+  );
+}
+function Nav() {
+  return (
+    <>
+      <Link to="/cardform">CardForm</Link>
+      <Link to="/">Home</Link>
+      <button onClick={() => auth().signOut()}>signout</button>
+    </>
   );
 }
 
