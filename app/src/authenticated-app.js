@@ -1,11 +1,10 @@
-import React from 'react';
-import { Redirect, Router, Link } from '@reach/router';
-import styled from 'styled-components';
-import CardForm from './component/CardForm/CardForm';
-import * as mq from './styles/media-queries';
-import { auth } from './firebase';
-import SetUpLoan from './setUpLoan.js';
-import { useUser, signout } from './context/auth-context';
+import { Link, Redirect, Router } from "@reach/router";
+import React from "react";
+import styled from "styled-components";
+import CardForm from "./component/CardForm/CheckoutPage";
+import { signout, useUser } from "./context/auth-context";
+import SetUpLoan from "./setUpLoan.js";
+import * as mq from "./styles/media-queries";
 
 console.log(mq);
 const Container = styled.div`
@@ -36,18 +35,18 @@ function Routes() {
   return (
     <Router>
       {/* <Redirector path="/" /> */}
-      <Placeholder path='/' />
+      <Placeholder path="/" />
       <NotFound default />
-      <CardForm path='/cardform' />
-      <ToLoan path='/SetUpLoan' />
+      <CardForm path="/cardform" />
+      <ToLoan path="/SetUpLoan" />
     </Router>
   );
 }
 function Nav() {
   return (
     <>
-      <Link to='/cardform'>CardForm</Link>
-      <Link to='/'>Home</Link>
+      <Link to="/cardform">CardForm</Link>
+      <Link to="/">Home</Link>
       <button onClick={() => signout()}>signout</button>
     </>
   );
@@ -64,6 +63,6 @@ function NotFound() {
   return <p>Not found</p>;
 }
 function Redirector() {
-  return <Redirect to='/something' />;
+  return <Redirect to="/something" />;
 }
 export default AuthenticatedApp;
