@@ -1,10 +1,10 @@
+import { Redirect, Router } from '@reach/router';
 import React from 'react';
-import { Router, Redirect } from '@reach/router';
-import { auth } from 'firebase';
+import CardForm from './component/CardForm/CardForm';
+import { auth, db } from './firebase';
 const AuthenticatedApp = () => {
 	return (
 		<div>
-			<Nav />
 			<p>Authenticated!</p>
 			<Routes />
 		</div>
@@ -17,6 +17,7 @@ function Routes() {
 			{/* <Redirector path="/" /> */}
 			<Placeholder path="/" />
 			<NotFound default />
+			<CardForm path="/cardform" />
 		</Router>
 	);
 }
@@ -30,6 +31,6 @@ function NotFound() {
 	return <p>Not found</p>;
 }
 function Redirector() {
-	return <Redirect to="/dashboard" />;
+	return <Redirect to="/something" />;
 }
 export default AuthenticatedApp;
