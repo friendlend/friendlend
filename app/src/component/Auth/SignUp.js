@@ -40,8 +40,31 @@ const SignUp = ({ navigate }) => {
       const stripe = await createStripeCustomer({
         email: signupForm.email,
         id: user.uid,
+        name: signupForm.name,
       });
-      console.log(stripe);
+      navigate('/SetUpLoan');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSignInWithGoogle = async e => {
+    e.preventDefault();
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      const { user } = await auth().signInWithPopup(provider);
+
+      const createStripeCustomer = firebase
+        .functions()
+        .httpsCallable('createStripeCustomer');
+
+      const stripe = await createStripeCustomer({
+        email: signupForm.email,
+        id: user.uid,
+        name: signupForm.name,
+      });
+      navigate('/SetUpLoan');
     } catch (err) {
       console.log(err);
     }
@@ -73,7 +96,7 @@ const SignUp = ({ navigate }) => {
         />
         <button type='submit'>Create Account</button>
       </form>
-      <button>Sign in with Google</button>
+      <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
     </>
   );
 };
