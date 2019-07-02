@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import './styles/global.css';
 import { StripeProvider } from "react-stripe-elements";
 import App from "./App";
 import { UserProvider } from "./context/auth-context";
