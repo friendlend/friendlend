@@ -24,7 +24,7 @@ const CheckoutForm = ({ stripe, location, navigate }) => {
     });
 
     if (stripeResponse.data.success) {
-      loanId ? navigate(`/confirm/${loanId}`) : navigate('/');
+      loanId ? navigate(`/review/${loanId}`) : navigate('/');
     } else {
       console.log(stripeResponse);
     }

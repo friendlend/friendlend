@@ -30,7 +30,7 @@ exports.createStripeCard = functions.https.onCall(async data => {
     const card = await stripe.customers.createSource(data.stripeId, {
       source: data.token,
     });
-    await db.doc(`users/${data.id}`).update({ stripeCardId: card.id });
+    await db.doc(`users/${data.id}`).update({ card });
     return {
       success: true,
       stripeCardId: card.id,

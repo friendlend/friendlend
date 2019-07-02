@@ -5,6 +5,7 @@ import CardForm from './component/CardForm/CheckoutPage';
 import { signout, useUser } from './context/auth-context';
 import SetUpLoan from './setUpLoan.js';
 import * as mq from './styles/media-queries';
+import ReviewLoan from './component/ReviewLoan';
 
 console.log(mq);
 const Container = styled.div`
@@ -39,6 +40,7 @@ function Routes() {
       <NotFound default />
       <CardForm path='/cardform' />
       <SetUpLoan path='/SetUpLoan' />
+      <ReviewLoan path='/review/:loanId' />
     </Router>
   );
 }
