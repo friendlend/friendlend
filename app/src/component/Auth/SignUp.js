@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { db, auth, firebase } from '../../firebase';
 
 const SignUp = ({ navigate }) => {
@@ -26,22 +26,6 @@ const SignUp = ({ navigate }) => {
         displayName: signupForm.displayName,
         photoUrl: 'https://placekitten.com/400/400',
       });
-      await db.doc(`users/${user.uid}`).set({
-        displayName: signupForm.displayName,
-        uid: user.uid,
-        email: signupForm.email,
-        photoUrl: 'https://placekitten.com/400/400',
-        createdDate: new Date(),
-      });
-      const createStripeCustomer = firebase
-        .functions()
-        .httpsCallable('createStripeCustomer');
-
-      const stripe = await createStripeCustomer({
-        email: signupForm.email,
-        id: user.uid,
-        name: signupForm.name,
-      });
       navigate('/SetUpLoan');
     } catch (err) {
       console.log(err);
@@ -52,18 +36,7 @@ const SignUp = ({ navigate }) => {
     e.preventDefault();
     try {
       const provider = new firebase.auth.GoogleAuthProvider();
-
-      const { user } = await auth().signInWithPopup(provider);
-
-      const createStripeCustomer = firebase
-        .functions()
-        .httpsCallable('createStripeCustomer');
-
-      await createStripeCustomer({
-        email: user.email,
-        id: user.uid,
-        name: user.displayName,
-      });
+      await auth().signInWithPopup(provider);
       navigate('/SetUpLoan');
     } catch (err) {
       console.log(err);

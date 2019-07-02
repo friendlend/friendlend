@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router } from '@reach/router';
+import { Router, Redirect } from '@reach/router';
 import { useUser } from './context/auth-context';
 import { db, auth } from './firebase';
 import LandingPage from './component/LandingPage';
@@ -47,9 +47,14 @@ const UnAuthenticatedApp = () => {
         <LandingPage path='/' exact />
         <Login path='/login' />
         <SignUp path='/signup' />
+        {/* <Redirector default /> */}
       </Router>
     </>
   );
 };
+
+function Redirector() {
+  return <Redirect to='/' />;
+}
 
 export default UnAuthenticatedApp;
