@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useUser } from './context/auth-context';
 import { db } from './firebase';
 
-const SetUpLoan = () => {
+const SetUpLoan = ({ navigate }) => {
   const { user } = useUser();
   const [loanInfo, setLoanInfo] = useState({
     loanAmount: 5000,
@@ -56,6 +56,7 @@ const SetUpLoan = () => {
         loanStatus: 'active',
         autoPay: loanInfo.autoPay,
       });
+    navigate('/cardform');
   };
 
   return (
