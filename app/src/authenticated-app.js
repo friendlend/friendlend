@@ -6,6 +6,7 @@ import * as mq from './styles/media-queries';
 import { auth } from './firebase';
 import SetUpLoan from './setUpLoan.js';
 import Dashboard from './Dashboard';
+import Bailout from './Bailout';
 
 const Container = styled.div`
 	transition: box-shadow 0.3s;
@@ -46,10 +47,10 @@ const Test = styled.div`
 function Routes() {
 	return (
 		<Router>
-			<Redirector path="/" />
 			<CardForm path="/cardform" />
 			<ToLoan path="/SetUpLoan" />
 			<Dashboard path="/dashboard" />
+			<Bailout path="/request/:id" />
 			<NotFound default />
 		</Router>
 	);

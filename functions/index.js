@@ -9,6 +9,7 @@ exports.createStripeCustomer = functions.https.onCall(async data => {
     const customer = await stripe.customers.create({
       email: data.email,
       description: `Customer for user id ${data.id}`,
+      name: data.name,
     });
     await db.doc(`users/${data.id}`).update({ stripeId: customer.id });
     return {

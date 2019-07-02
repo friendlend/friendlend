@@ -1,6 +1,10 @@
 import React from 'react';
+import { Router, Redirect } from '@reach/router';
 import { useUser } from './context/auth-context';
 import { db, auth } from './firebase';
+import LandingPage from './component/LandingPage';
+import Login from './component/Auth/Login';
+import SignUp from './component/Auth/SignUp';
 
 const UnAuthenticatedApp = () => {
 	const { handleGoogleSignIn } = useUser();
@@ -39,19 +43,18 @@ const UnAuthenticatedApp = () => {
 	}
 	return (
 		<>
-			<p>UNNNNNAuthenticated!</p>
-			<button onClick={handleGoogleSignIn}>Sign in with Google</button>
-			<form onSubmit={handleEmailPassSignIn}>
-				<label htmlFor="displayName">name</label>
-				<input id="displayName" />
-				<label htmlFor="email">Email</label>
-				<input id="email" />
-				<label htmlFor="password">Password</label>
-				<input id="password" type="password" />
-				<button type="submit">Sign in with Email & Password</button>
-			</form>
+			<Router>
+				<LandingPage path="/" exact />
+				<Login path="/login" />
+				<SignUp path="/signup" />
+				{/* <Redirector default /> */}
+			</Router>
 		</>
 	);
 };
+
+function Redirector() {
+	return <Redirect to="/" />;
+}
 
 export default UnAuthenticatedApp;
