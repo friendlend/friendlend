@@ -1,83 +1,98 @@
-import React, { Component } from 'react';
-import DayPicker from 'react-date-picker';
-// import 'react-day-picker/lib/style.css';
+import React, { useState } from 'react';
+import DatePicker from 'react-date-picker';
 import './setUpLoan.css';
 import ReactNumeric from 'react-numeric';
+import moment from 'moment';
+import { useUser } from './context/auth-context';
+import { db } from './firebase';
 
-class SetUpLoan extends Component {
-  constructor() {
-    super();
-    this.handleDayClick = this.handleDayClick.bind(this);
-    this.state = {
-      loanAmount: 0,
-      selectedDay: null,
-      autoPay: false,
-    };
-  }
+const SetUpLoan = () => {
+  const { user } = useUser();
+  const [loanInfo, setLoanInfo] = useState({
+    loanAmount: 5000,
+    selectedDay: moment()
+      .add(2, 'w')
+      .toDate(),
+    autoPay: true,
+  });
 
-  handleDayClick(day, { selected }) {
-    this.setState({
-      ...this.state,
-      selectedDay: selected ? undefined : day,
-    });
-  }
-
-  handleChanges = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
+  const handleDayClick = day => {
+    setLoanInfo({
+      ...loanInfo,
+      selectedDay: day,
     });
   };
 
-  handleCheckbox() {
-    let checkBox = document.getElementById('myCheck');
+  const handleChanges = e => {
+    const value =
+      e.target.id === 'loanAmount'
+        ? parseFloat(e.target.value.replace(/\$|,/g, '')) * 100
+        : e.target.value;
+    setLoanInfo({
+      ...loanInfo,
+      [e.target.id]: value,
+    });
+  };
 
-    if (checkBox.checked == true) {
-      this.setState({ ...this.state, autoPay: true });
+  const handleCheckbox = e => {
+    if (e.target.checked) {
+      setLoanInfo({ ...loanInfo, autoPay: true });
     } else {
-      this.setState({ ...this.state, autoPay: true });
+      setLoanInfo({ ...loanInfo, autoPay: false });
     }
-  }
+  };
 
-  render() {
-    return (
-      <div className='center' name>
-        <p>Loan Amount:</p>
-        <ReactNumeric
-          value={this.state.loanAmount}
-          preDefined={{
-            allowDecimalPadding: false,
-            currencySymbol: '$',
-            decimalPlaces: 0,
-            decimalPlacesRawValue: 0,
-            maximumValue: '1000',
-            minimumValue: '0',
-            outputFormat: 'number',
-            unformatOnSubmit: true,
-          }}
-          onChange={(event, value) =>
-            this.setState({
-              ...this.state,
-              loanAmount: value,
-            })
-          }
+  const handleSubmit = async e => {
+    e.preventDefault();
+    await db
+      .collection('loans')
+      .doc()
+      .set({
+        amount: loanInfo.loanAmount,
+        total: loanInfo.loanAmount * 1.15,
+        createdDate: moment().toDate(),
+        dueDate: loanInfo.selectedDay,
+        borrower: db.doc(`users/${user.uid}`),
+        loanStatus: 'active',
+        autoPay: loanInfo.autoPay,
+      });
+  };
+
+  return (
+    <form className='center' onSubmit={handleSubmit}>
+      <p>Loan Amount:</p>
+      <ReactNumeric
+        value={loanInfo.loanAmount / 100}
+        preDefined={{
+          allowDecimalPadding: true,
+          currencySymbol: '$',
+          decimalPlaces: 2,
+          maximumValue: '5000',
+          minimumValue: '0',
+          outputFormat: 'number',
+          unformatOnSubmit: true,
+        }}
+        id='loanAmount'
+        onChange={handleChanges}
+      />
+      <p>Loan Pay Back Date:</p>
+      <DatePicker
+        id='selectedDay'
+        value={loanInfo.selectedDay}
+        onChange={handleDayClick}
+      />
+      <div className='checkBox'>
+        <p>Have loan automatically paid back on selected date?</p>
+        <input
+          type='checkbox'
+          id='autoPay'
+          onChange={handleCheckbox}
+          checked={loanInfo.autoPay}
         />
-        <p>{this.state.loanAmount}</p>
-        <p>Loan Pay Back Date:</p>
-        <DayPicker
-          month={new Date(2019, 6)}
-          fromMonth={new Date(2019, 6)}
-          toMonth={new Date(2020, 7)}
-          selectedDays={this.state.selectedDay}
-          onDayClick={this.handleDayClick}
-        />
-        <div className='checkBox'>
-          <p>Have loan automatically paid back on selected date?</p>
-          <input type='checkbox' id='myCheck' onclick='myFunction()' />
-        </div>
-        <button>Continue</button>
       </div>
-    );
-  }
-}
+      <button type='submit'>Continue</button>
+    </form>
+  );
+};
 
 export default SetUpLoan;
