@@ -7,62 +7,90 @@ import SetUpLoan from './setUpLoan.js';
 import * as mq from './styles/media-queries';
 import ReviewLoan from './component/ReviewLoan';
 import LoanRequest from './component/LoanRequest';
+import Bailout from './Bailout';
+import { auth } from './firebase';
+import Dashboard from './Dashboard';
+import LandingPage from './component/LandingPage';
 
-console.log(mq);
 const Container = styled.div`
+  transition: box-shadow 0.3s;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s;
   display: grid;
   width: 100%;
-  max-width: 880px;
+  max-width: 1220px;
+  height: 75%;
   grid-gap: 1em;
   margin: 0 auto;
-  border: 2px solid black;
+  margin-top: 2rem;
   ${mq.small} {
     border: 2px solid rebeccapurple;
     background-color: yellow;
   }
 `;
 const AuthenticatedApp = () => {
-  const user = useUser();
-  console.log(user);
   return (
-    <Container>
+    <Test>
       <Nav />
-      <p>Authenticated!</p>
-      <Routes />
-    </Container>
+      <Container>
+        <Routes />
+      </Container>
+    </Test>
   );
 };
-
+const Test = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background-color: whitesmoke;
+  flex-direction: column;
+`;
 function Routes() {
   return (
     <Router>
-      {/* <Redirector path="/" /> */}
-      <Placeholder path='/' />
-      <NotFound default />
       <CardForm path='/cardform' />
-      <SetUpLoan path='/SetUpLoan' />
-      <ReviewLoan path='/review/:loanId' />
-      <LoanRequest path='/request/:loanId' />
+      <ToLoan path='/SetUpLoan' />
+      <Dashboard path='/dashboard' />
+      <Bailout path='/request/:id' />
+      <LandingPage path='/' />
+      <NotFound default />
     </Router>
   );
 }
 function Nav() {
   return (
-    <>
+    <NavWrapper>
       <Link to='/cardform'>CardForm</Link>
-      <Link to='/'>Home</Link>
-      <button onClick={() => signout()}>signout</button>
-    </>
+      <Link to='/dashboard'>Dashboard</Link>
+      <Link to='/SetUpLoan'>Setup Loan</Link>
+      <button onClick={() => auth().signOut()}>signout</button>
+    </NavWrapper>
   );
 }
-
-function Placeholder() {
-  return <p>Placeholder Page</p>;
+const NavWrapper = styled.nav`
+  display: flex;
+  width: 100%;
+  position: sticky;
+  padding: 2em 1.5em;
+  background-color: #333333;
+  & > * {
+    color: white;
+  }
+  & > button {
+    color: red;
+  }
+`;
+function ToLoan() {
+  return <SetUpLoan />;
 }
+
 function NotFound() {
   return <p>Not found</p>;
 }
 function Redirector() {
-  return <Redirect to='/something' />;
+  return <Redirect to='/dashboard' />;
 }
 export default AuthenticatedApp;
