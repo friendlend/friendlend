@@ -1,14 +1,29 @@
-import { Redirect, Router, Link } from '@reach/router';
 import React from 'react';
+import { Redirect, Router, Link } from '@reach/router';
+import styled from 'styled-components';
 import CardForm from './component/CardForm/CardForm';
+import * as mq from './styles/media-queries';
 import { auth } from './firebase';
+console.log(mq);
+const Container = styled.div`
+	display: grid;
+	width: 100%;
+	max-width: 880px;
+	grid-gap: 1em;
+	margin: 0 auto;
+	border: 2px solid black;
+	${mq.small} {
+		border: 2px solid rebeccapurple;
+		background-color: yellow;
+	}
+`;
 const AuthenticatedApp = () => {
 	return (
-		<div>
+		<Container>
 			<Nav />
 			<p>Authenticated!</p>
 			<Routes />
-		</div>
+		</Container>
 	);
 };
 
