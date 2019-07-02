@@ -6,6 +6,7 @@ import { signout, useUser } from './context/auth-context';
 import SetUpLoan from './setUpLoan.js';
 import * as mq from './styles/media-queries';
 import ReviewLoan from './component/ReviewLoan';
+import LoanRequest from './component/LoanRequest';
 
 console.log(mq);
 const Container = styled.div`
@@ -41,6 +42,7 @@ function Routes() {
       <CardForm path='/cardform' />
       <SetUpLoan path='/SetUpLoan' />
       <ReviewLoan path='/review/:loanId' />
+      <LoanRequest path='/request/:loanId' />
     </Router>
   );
 }

@@ -45,7 +45,7 @@ const ReviewLoan = ({ loanId, navigate }) => {
           </tr>
         </tbody>
       </table>
-      <button onClick={() => navigate(`/confirm/${loanId}`)}>
+      <button onClick={() => navigate(`/request/${loanId}`)}>
         Looks good!
       </button>
     </>
