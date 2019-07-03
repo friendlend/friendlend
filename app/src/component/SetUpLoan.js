@@ -47,7 +47,7 @@ const SetUpLoan = ({ navigate }) => {
     const loan = await db.collection('loans').doc();
     await db.doc(`loans/${loan.id}`).set({
       amount: loanInfo.loanAmount,
-      total: loanInfo.loanAmount * 1.15,
+      total: loanInfo.loanAmount * 1.05,
       createdDate: moment().toDate(),
       dueDate: loanInfo.selectedDay,
       borrower: db.doc(`users/${user.uid}`),
