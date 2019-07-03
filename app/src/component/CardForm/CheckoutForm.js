@@ -59,6 +59,7 @@ const CheckoutForm = props => {
     });
 
     console.log(stripeResponse);
+    navigate(`/loan/${loanId}`);
   };
 
   if (location.pathname === '/cardform') {

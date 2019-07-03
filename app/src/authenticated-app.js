@@ -8,6 +8,7 @@ import ReviewLoan from './component/ReviewLoan';
 import LoanRequest from './component/LoanRequest';
 import Dashboard from './Dashboard';
 import LandingPage from './component/LandingPage';
+import Loan from './component/Loan';
 import { signout } from './context/auth-context';
 
 const Container = styled.div`
@@ -54,6 +55,7 @@ function Routes() {
       <Dashboard path='/dashboard' />
       <ReviewLoan path='/review/:loanId' />
       <LoanRequest path='/request/:loanId' />
+      <Loan path='/loan/:loanId' />
       <LandingPage path='/' />
       <NotFound default />
     </Router>
