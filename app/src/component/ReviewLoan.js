@@ -11,11 +11,10 @@ const ReviewLoan = ({ loanId, navigate }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const loan = await db.doc(`loans/${loanId}`).get();
-      setLoan(loan.data());
+      const loanData = await db.doc(`loans/${loanId}`).get();
+      setLoan(loan => loanData.data());
     };
     fetchData();
-    console.log(loan);
   }, [loanId]);
 
   return loan ? (

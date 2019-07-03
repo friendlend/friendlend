@@ -1,20 +1,27 @@
-import React from 'react';
-import {
-  CardElement,
-  injectStripe,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCVCElement,
-} from 'react-stripe-elements';
+import React, { useState, useEffect } from 'react';
+import { CardElement, injectStripe } from 'react-stripe-elements';
 import styled from 'styled-components';
-import { firebase } from '../../firebase';
+import moment from 'moment';
+import { firebase, db } from '../../firebase';
 import { useUser } from '../../context/auth-context';
 
 const CheckoutForm = props => {
+  const [loan, setLoan] = useState(null);
   const { stripe, location, navigate } = props;
   const { user } = useUser();
 
   const loanId = location && location.state ? location.state.loanId : null;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const loanRef = await db.doc(`/loans/${loanId}`).get();
+      const loanInfo = loanRef.data();
+      const borrower = await loanRef.data().borrower.get();
+      loanInfo.borrower = borrower.data();
+      setLoan(() => loanInfo);
+    };
+    fetchData();
+  }, [loanId]);
 
   const submit = async ev => {
     ev.preventDefault();
@@ -28,12 +35,8 @@ const CheckoutForm = props => {
     const stripeResponse = await createStripeCard({
       token: token.id,
       stripeId: user.stripeId,
-      token: token.id,
       id: user.uid,
     });
-
-    console.log(token);
-
     if (stripeResponse.data.success) {
       loanId ? navigate(`/review/${loanId}`) : navigate('/');
     } else {
@@ -65,7 +68,7 @@ const CheckoutForm = props => {
         <p>
           Please note that we can only send money to debit cards at this time
         </p>
-        <div style={{ width: '45%' }}>
+        <div style={{ width: '100%', margin: '10px' }}>
           <CardElement
             style={{
               base: {
@@ -82,12 +85,25 @@ const CheckoutForm = props => {
       </CardPage>
     );
   } else if (location.pathname.includes('/payloan')) {
-    return (
+    return loan ? (
       <CardPage>
         <h2>You're SUCH a good person</h2>
-        <CardElement />
+        <p>
+          {loan.borrower.displayName}'s day is really going to be made by your
+          generosity.
+        </p>
+        <p>
+          As a reminder, this loan is for $${(loan.total / 100).toFixed(2)} and
+          is scheduled to be paid back on{' '}
+          {moment(loan.dueDate, 'X').format('dddd, MMMM Do, YYYY')}
+        </p>
+        <div style={{ width: '100%', margin: '10px' }}>
+          <CardElement />
+        </div>
         <button onClick={payLoanSubmit}>Send</button>
       </CardPage>
+    ) : (
+      <p>Loading...</p>
     );
   }
 };
@@ -99,6 +115,8 @@ const CardPage = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 50px;
+  width: 50%;
+  margin: 0 auto;
   h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;

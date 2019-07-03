@@ -1,20 +1,20 @@
 import React from 'react';
-import { useSpring, animated } from 'react-spring';
+// import { useSpring, animated } from 'react-spring';
 import { Link } from '@reach/router';
-import transfer from '../images/transfer.svg';
+// import transfer from '../images/transfer.svg';
 import pay from '../assets/videos/pay.mp4';
 import styled from 'styled-components';
-const Img = styled.img`
-  width: 250px;
-  height: 300px;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
+// const Img = styled.img`
+//   width: 250px;
+//   height: 300px;
+//   width: 100%;
+//   margin-top: 20px;
+//   margin-bottom: 20px;
+// `;
 
 const LandingPage = ({ navigate }) => {
-  const fade = useSpring({ opacity: 1, from: { opacity: 0 }, delay: 600 });
-  const fade2 = useSpring({ opacity: 1, from: { opacity: 0 }, delay: 1050 });
+  // const fade = useSpring({ opacity: 1, from: { opacity: 0 }, delay: 600 });
+  // const fade2 = useSpring({ opacity: 1, from: { opacity: 0 }, delay: 1050 });
   return (
     <Container>
       <NavWrapper>
@@ -71,50 +71,50 @@ const LandingPage = ({ navigate }) => {
     </Container>
   );
 };
-const Card = styled.div`
-  margin-top: 10px;
-  h4 {
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 1.4rem;
-  }
-  width: 26%;
-  display: flex;
-  flex-direction: column;
-  p {
-    line-height: 1.5;
-  }
-`;
-const Button = styled.button`
-  width: 125px;
-  height: 42px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 18px;
-  padding: 8px;
-  color: white;
-  background-color: #4f455e;
-  &:hover {
-    opacity: 0.7;
-  }
-`;
-const P = styled.p`
-  width: 40%;
-`;
-const Div = styled(animated.div)`
-  display: flex;
-  margin: 0 auto;
-  margin-top: 40px;
-  width: 90%;
-  justify-content: space-evenly;
-`;
-const H1 = styled.h1`
-  text-align: center;
-  margin-top: 10px;
-  font-size: 4rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-`;
+// const Card = styled.div`
+//   margin-top: 10px;
+//   h4 {
+//     text-align: center;
+//     margin-bottom: 10px;
+//     font-size: 1.4rem;
+//   }
+//   width: 26%;
+//   display: flex;
+//   flex-direction: column;
+//   p {
+//     line-height: 1.5;
+//   }
+// `;
+// const Button = styled.button`
+//   width: 125px;
+//   height: 42px;
+//   cursor: pointer;
+//   border-radius: 5px;
+//   font-size: 18px;
+//   padding: 8px;
+//   color: white;
+//   background-color: #4f455e;
+//   &:hover {
+//     opacity: 0.7;
+//   }
+// `;
+// const P = styled.p`
+//   width: 40%;
+// `;
+// const Div = styled(animated.div)`
+//   display: flex;
+//   margin: 0 auto;
+//   margin-top: 40px;
+//   width: 90%;
+//   justify-content: space-evenly;
+// `;
+// const H1 = styled.h1`
+//   text-align: center;
+//   margin-top: 10px;
+//   font-size: 4rem;
+//   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+//     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+// `;
 export default LandingPage;
 const Container = styled.div`
   display: flex;

@@ -29,8 +29,25 @@ const LoanRequest = ({ loanId, navigate }) => {
   return loan ? (
     <ReviewLoanPage>
       <h2>
-        &#x1F4B8; &#x1F4B8; &#x1F4B8; {loan.borrower.displayName} is requesting
-        a loan! &#x1F4B8; &#x1F4B8; &#x1F4B8;
+        <span role='img' aria-label='money with wings emoji'>
+          &#x1F4B8;
+        </span>{' '}
+        <span role='img' aria-label='money with wings emoji'>
+          &#x1F4B8;
+        </span>{' '}
+        <span role='img' aria-label='money with wings emoji'>
+          &#x1F4B8;
+        </span>{' '}
+        {loan.borrower.displayName} is requesting a loan!
+        <span role='img' aria-label='money with wings emoji'>
+          &#x1F4B8;
+        </span>{' '}
+        <span role='img' aria-label='money with wings emoji'>
+          &#x1F4B8;
+        </span>{' '}
+        <span role='img' aria-label='money with wings emoji'>
+          &#x1F4B8;
+        </span>
       </h2>
       <h3>Here are the details...</h3>
       <table>
@@ -49,7 +66,15 @@ const LoanRequest = ({ loanId, navigate }) => {
           </tr>
         </tbody>
       </table>
-      <h3>&#x1F64F; Can you help out? &#x1F64F;</h3>
+      <h3>
+        <span role='img' aria-label='praying hands emoji'>
+          &#x1F4B8;
+        </span>{' '}
+        Can you help out?{' '}
+        <span role='img' aria-label='praying hands emoji'>
+          &#x1F4B8;
+        </span>
+      </h3>
       <button onClick={handleAccept}>Send money</button>
     </ReviewLoanPage>
   ) : (

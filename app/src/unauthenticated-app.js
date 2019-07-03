@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Redirect } from '@reach/router';
+import { Router } from '@reach/router';
 import LandingPage from './component/LandingPage';
 import Login from './component/Auth/Login';
 import SignUp from './component/Auth/SignUp';
