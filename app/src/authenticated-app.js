@@ -12,32 +12,32 @@ import { auth } from './firebase';
 import Dashboard from './Dashboard';
 import LandingPage from './component/LandingPage';
 
-const Container = styled.div`
-  transition: box-shadow 0.3s;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background: #fff;
-  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.5s;
-  display: grid;
-  width: 100%;
-  max-width: 1220px;
-  height: 75%;
-  grid-gap: 1em;
-  margin: 0 auto;
-  margin-top: 2rem;
-  ${mq.small} {
-    border: 2px solid rebeccapurple;
-    background-color: yellow;
-  }
-`;
+// const Container = styled.div`
+//   transition: box-shadow 0.3s;
+//   border-radius: 10px;
+//   border: 1px solid #ccc;
+//   background: #fff;
+//   box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+//   transition: box-shadow 0.5s;
+//   display: flex;
+//   width: 100%;
+//   max-width: 1220px;
+//   height: 85%;
+//   padding: 10px;
+//   margin: 0 auto;
+//   margin-top: 2rem;
+//   ${mq.small} {
+//     border: 2px solid rebeccapurple;
+//     background-color: yellow;
+//   }
+// `;
 const AuthenticatedApp = () => {
   return (
     <Test>
       <Nav />
-      <Container>
-        <Routes />
-      </Container>
+      {/* <Container> */}
+      <Routes />
+      {/* </Container> */}
     </Test>
   );
 };
@@ -63,24 +63,57 @@ function Routes() {
 function Nav() {
   return (
     <NavWrapper>
-      <Link to='/cardform'>CardForm</Link>
-      <Link to='/dashboard'>Dashboard</Link>
-      <Link to='/SetUpLoan'>Setup Loan</Link>
-      <button onClick={() => auth().signOut()}>signout</button>
+      <LinkWrapper>
+        <Link to='/cardform'>CardForm</Link>
+      </LinkWrapper>
+      <LinkWrapper>
+        <Link to='/dashboard'>Dashboard</Link>
+      </LinkWrapper>
+      <LinkWrapper>
+        <Link to='/SetUpLoan'>Setup Loan</Link>
+      </LinkWrapper>
+      <ButtonWrapper>
+        <div onClick={() => auth().signOut()}>Signout</div>
+      </ButtonWrapper>
     </NavWrapper>
   );
 }
 const NavWrapper = styled.nav`
-  display: flex;
   width: 100%;
   position: sticky;
-  padding: 2em 1.5em;
-  background-color: #333333;
+  background-color: #202021;
+`;
+
+const LinkWrapper = styled.div`
+  float: left;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  border-right: 1px solid white;
+  height: 40px;
+  padding: 10px 30px;
+  & > * {
+    color: white;
+    text-decoration: none;
+  }
+  &:hover {
+    background: #91959c;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-content: center;
+  align-items: center;
+  float: right;
+  border-left: 1px solid #bbb;
+  height: 40px;
+  padding: 10px 30px;
   & > * {
     color: white;
   }
-  & > button {
-    color: red;
+  &:hover {
+    background: #91959c;
   }
 `;
 function ToLoan() {
