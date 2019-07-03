@@ -58,6 +58,11 @@ const CheckoutForm = props => {
       userId: user.uid,
     });
 
+    await db.doc(`loans/${loanId}`).update({
+      lender: db.doc(`users/${user.uid}`),
+      lendingDate: new Date(),
+    });
+
     console.log(stripeResponse);
     navigate(`/loan/${loanId}`);
   };
