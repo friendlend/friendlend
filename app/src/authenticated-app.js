@@ -82,6 +82,8 @@ const NavWrapper = styled.nav`
   width: 100%;
   position: sticky;
   background-color: #202021;
+  margin-bottom: 10px;
+  border-radius: 5px;
 `;
 
 const LinkWrapper = styled.div`
@@ -89,15 +91,15 @@ const LinkWrapper = styled.div`
   display: flex;
   align-content: center;
   align-items: center;
-  border-right: 1px solid white;
-  height: 40px;
+  border-right: 1px solid #6c63fe;
+  height: 50px;
   padding: 10px 30px;
   & > * {
     color: white;
     text-decoration: none;
   }
   &:hover {
-    background: #91959c;
+    background: #6c63fe;
   }
 `;
 
@@ -106,14 +108,14 @@ const ButtonWrapper = styled.div`
   align-content: center;
   align-items: center;
   float: right;
-  border-left: 1px solid #bbb;
-  height: 40px;
+  border-left: 1px solid #6c63fe;
+  height: 50px;
   padding: 10px 30px;
   & > * {
     color: white;
   }
   &:hover {
-    background: #91959c;
+    background: #6c63fe;
   }
 `;
 function ToLoan() {
