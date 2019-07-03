@@ -1,12 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { db, auth, firebase } from '../../firebase';
+import React, { useState } from 'react';
+import { auth, firebase } from '../../firebase';
 
-const SignUp = ({ navigate }) => {
+const SignUp = ({ navigate, location }) => {
   const [signupForm, setSignupForm] = useState({
     displayName: '',
     email: '',
     password: '',
   });
+
+  const loanId = location && location.state ? location.state.loanId : null;
 
   const handleChanges = e => {
     setSignupForm({
@@ -26,7 +28,9 @@ const SignUp = ({ navigate }) => {
         displayName: signupForm.displayName,
         photoUrl: 'https://placekitten.com/400/400',
       });
-      navigate('/SetUpLoan');
+      loanId
+        ? navigate(`/payloan/${loanId}`, { state: { loanId } })
+        : navigate('/newloan');
     } catch (err) {
       console.log(err);
     }
@@ -37,7 +41,9 @@ const SignUp = ({ navigate }) => {
     try {
       const provider = new firebase.auth.GoogleAuthProvider();
       await auth().signInWithPopup(provider);
-      navigate('/SetUpLoan');
+      loanId
+        ? navigate(`/payloan/${loanId}`, { state: { loanId } })
+        : navigate('/newloan');
     } catch (err) {
       console.log(err);
     }

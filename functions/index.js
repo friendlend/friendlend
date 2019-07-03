@@ -6,10 +6,17 @@ const stripe = require('stripe')(functions.config().stripe.secret);
 
 exports.createStripeCustomer = functions.https.onCall(async data => {
   try {
-    const customer = await stripe.customers.create({
+    const customer = await stripe.accounts.create({
+      type: 'custom',
       email: data.email,
-      description: `Customer for user id ${data.id}`,
-      name: data.name,
+      metadata: { userId: data.id },
+      individual: { first_name: data.name },
+      business_type: 'individual',
+      requested_capabilities: ['platform_payments', 'card_payments'],
+      tos_acceptance: {
+        date: Date.now(),
+        ip: '97.80.80.201',
+      },
     });
     await db.doc(`users/${data.id}`).update({ stripeId: customer.id });
     return {
@@ -27,8 +34,8 @@ exports.createStripeCustomer = functions.https.onCall(async data => {
 
 exports.createStripeCard = functions.https.onCall(async data => {
   try {
-    const card = await stripe.customers.createSource(data.stripeId, {
-      source: data.token,
+    const card = await stripe.accounts.update(data.stripeId, {
+      external_account: data.token,
     });
     await db.doc(`users/${data.id}`).update({ card });
     return {
@@ -51,29 +58,34 @@ exports.payLoan = functions.https.onCall(async data => {
       .update({ loanStatus: 'pending_payout' });
     const loanRef = await db.doc(`loans/${data.loanId}`).get();
     const loan = loanRef.data();
-    const card = await stripe.customers.createSource(data.stripeId, {
-      source: data.token,
-    });
-    await db.doc(`users/${data.id}`).update({ stripeCardId: card.id });
+    // const card = await stripe.accounts.update(data.stripeId, {
+    //   external_account: data.token,
+    // });
+    // await db.doc(`users/${data.userId}`).update({ card: card });
+    const borrowerRef = await loan.borrower.get();
+    const borrower = borrowerRef.data();
     const charge = await stripe.charges.create({
       amount: loan.total,
       currency: 'usd',
-      source: card.id,
-      description: `Loan payment for loan id ${loan.id}`,
+      source: data.token,
+      description: `Loan payment for loan id ${loanRef.id}`,
+      transfer_data: {
+        destination: borrower.stripeId,
+        amount: loan.amount,
+      },
     });
-    const borrowerRef = await loan.borrower.get();
-    const borrower = borrowerRef.data();
-    const payout = await stripe.payouts.create({
-      amount: loan.amount,
-      currency: 'usd',
-      destination: borrower.stripeCardId,
-      method: 'instant',
-      description: `Loan payment for loan id ${loan.id}`,
-    });
+    // const payout = await stripe.transfers.create({
+    //   amount: loan.amount,
+    //   currency: 'usd',
+    //   destination: borrower.stripeId,
+    //   source_transaction: charge.id,
+    //   description: `Loan payment for loan id ${loan.id}`,
+    // });
     await db.doc(`loans/${data.loanId}`).update({
       loanStatus: 'loan_paid',
       loanPaymentChargeId: charge.id,
-      loanPaymentPayoutId: payout.id,
+      //   loanPaymentPayoutId: payout.id,
+      lender: db.doc(`users/${data.userId}`),
     });
     return {
       success: true,

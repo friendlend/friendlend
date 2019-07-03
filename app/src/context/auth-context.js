@@ -51,18 +51,19 @@ function useAuth() {
             email: firebaseUser.email,
             createdDate: new Date(),
           };
-          setUser(newUser);
-          window.localStorage.setItem('user', JSON.stringify(newUser));
           await db.doc(`users/${firebaseUser.uid}`).set(newUser);
           const createStripeCustomer = firebase
             .functions()
             .httpsCallable('createStripeCustomer');
 
-          await createStripeCustomer({
+          const stripeResponse = await createStripeCustomer({
             email: firebaseUser.email,
             id: firebaseUser.uid,
             name: firebaseUser.displayName,
           });
+          newUser.stripeId = stripeResponse.data.stripeId;
+          setUser(newUser);
+          window.localStorage.setItem('user', JSON.stringify(newUser));
         }
       } else {
         setUser(null);

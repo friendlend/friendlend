@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { db } from '../firebase';
+import { useUser } from '../context/auth-context';
 
-const LoanRequest = ({ loanId }) => {
+const LoanRequest = ({ loanId, navigate }) => {
   const [loan, setLoan] = useState(null);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,9 +18,15 @@ const LoanRequest = ({ loanId }) => {
     fetchData();
   }, [loanId]);
 
+  const handleAccept = e => {
+    e.preventDefault();
+    user
+      ? navigate(`/payloan/${loanId}`, { state: { loanId } })
+      : navigate('/signup', { state: { loanId } });
+  };
+
   return loan ? (
     <>
-      {console.log(loan)}
       <h2>{loan.borrower.displayName} is requesting a loan!</h2>
       <h3>Here are the details...</h3>
       <table>
@@ -38,7 +46,7 @@ const LoanRequest = ({ loanId }) => {
         </tbody>
       </table>
       <h3>Can you help out?</h3>
-      <button>Send money</button>
+      <button onClick={handleAccept}>Send money</button>
     </>
   ) : (
     <p>Loading...</p>

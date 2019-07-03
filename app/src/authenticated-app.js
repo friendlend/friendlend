@@ -1,16 +1,15 @@
-import { Link, Redirect, Router } from '@reach/router';
+import { Link, Router } from '@reach/router';
 import React from 'react';
 import styled from 'styled-components';
 import CardForm from './component/CardForm/CheckoutPage';
-import { signout, useUser } from './context/auth-context';
 import SetUpLoan from './setUpLoan.js';
 import * as mq from './styles/media-queries';
 import ReviewLoan from './component/ReviewLoan';
 import LoanRequest from './component/LoanRequest';
-import Bailout from './Bailout';
 import { auth } from './firebase';
 import Dashboard from './Dashboard';
 import LandingPage from './component/LandingPage';
+import { signout } from './context/auth-context';
 
 const Container = styled.div`
   transition: box-shadow 0.3s;
@@ -52,9 +51,11 @@ function Routes() {
   return (
     <Router>
       <CardForm path='/cardform' />
-      <ToLoan path='/SetUpLoan' />
+      <CardForm path='/payloan/:loanId' />
+      <SetUpLoan path='/newloan' />
       <Dashboard path='/dashboard' />
-      <Bailout path='/request/:id' />
+      <ReviewLoan path='/review/:loanId' />
+      <LoanRequest path='/request/:loanId' />
       <LandingPage path='/' />
       <NotFound default />
     </Router>
@@ -66,7 +67,9 @@ function Nav() {
       <Link to='/cardform'>CardForm</Link>
       <Link to='/dashboard'>Dashboard</Link>
       <Link to='/SetUpLoan'>Setup Loan</Link>
-      <button onClick={() => auth().signOut()}>signout</button>
+      <Link to='/' onClick={() => signout()}>
+        signout
+      </Link>
     </NavWrapper>
   );
 }
@@ -83,14 +86,9 @@ const NavWrapper = styled.nav`
     color: red;
   }
 `;
-function ToLoan() {
-  return <SetUpLoan />;
-}
 
 function NotFound() {
   return <p>Not found</p>;
 }
-function Redirector() {
-  return <Redirect to='/dashboard' />;
-}
+
 export default AuthenticatedApp;

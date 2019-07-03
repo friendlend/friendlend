@@ -14,7 +14,8 @@ const ReviewLoan = ({ loanId, navigate }) => {
       setLoan(loan.data());
     };
     fetchData();
-  }, []);
+    console.log(loan);
+  }, [loanId]);
 
   return loan ? (
     <>
@@ -36,7 +37,9 @@ const ReviewLoan = ({ loanId, navigate }) => {
           <tr>
             <td>Payout Method</td>
             <td>
-              {user.card.brand} ending in {user.card.last4}
+              {user.card.external_accounts.data[0].brand}
+              &nbsp;ending in&nbsp;
+              {user.card.external_accounts.data[0].last4}
             </td>
           </tr>
           <tr>
