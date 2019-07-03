@@ -5,7 +5,8 @@ import { useUser } from './context/auth-context';
 function App() {
   const { user } = useUser();
   console.log(user, 'user');
-  return user ? <AuthenticatedApp /> : <UnAuthenticatedApp />;
+  let testin = true;
+  return testin ? <AuthenticatedApp /> : <UnAuthenticatedApp />;
 }
 
 export default App;
