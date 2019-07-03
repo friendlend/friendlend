@@ -40,11 +40,10 @@ const AuthenticatedApp = () => {
   );
 };
 const Test = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100vh;
-  background-color: whitesmoke;
-  flex-direction: column;
+  // display: flex;
+  // align-items: center;
+  // background-color: whitesmoke;
+  // flex-direction: column;
 `;
 function Routes() {
   return (
@@ -63,26 +62,48 @@ function Routes() {
 function Nav() {
   return (
     <NavWrapper>
-      <Link to='/cardform'>CardForm</Link>
-      <Link to='/dashboard'>Dashboard</Link>
-      <Link to='/SetUpLoan'>Setup Loan</Link>
-      <Link to='/' onClick={() => signout()}>
-        signout
-      </Link>
+      <h1>friendlend</h1>
+      <nav>
+        <Link to='/newloan'>Create New Loan</Link>
+        &nbsp;|&nbsp;
+        <Link to='/dashboard'>Dashboard</Link>
+        &nbsp;|&nbsp;
+        <Link to='/' onClick={() => signout()}>
+          Sign Out
+        </Link>
+      </nav>
     </NavWrapper>
   );
 }
-const NavWrapper = styled.nav`
+const NavWrapper = styled.header`
   display: flex;
   width: 100%;
+  height: 75px;
   position: sticky;
-  padding: 2em 1.5em;
   background-color: #333333;
-  & > * {
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
     color: white;
+    font-family: 'Permanent Marker', cursive;
+    user-select: none;
+    font-size: 3rem;
+    margin-left: 5%;
   }
-  & > button {
-    color: red;
+
+  nav {
+    font-size: 1.6rem;
+    color: white;
+    margin-right: 5%;
+    a {
+      color: white;
+      text-decoration: none;
+      transition: 300ms;
+      &:hover {
+        color: green;
+      }
+    }
   }
 `;
 
