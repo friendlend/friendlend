@@ -40,10 +40,10 @@ const AuthenticatedApp = () => {
   );
 };
 const Test = styled.div`
-  // display: flex;
-  // align-items: center;
-  // background-color: whitesmoke;
-  // flex-direction: column;
+  display: flex;
+  align-items: center;
+  background-color: whitesmoke;
+  flex-direction: column;
 `;
 function Routes() {
   return (

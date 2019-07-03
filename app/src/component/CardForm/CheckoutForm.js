@@ -1,5 +1,12 @@
 import React from 'react';
-import { CardElement, injectStripe } from 'react-stripe-elements';
+import {
+  CardElement,
+  injectStripe,
+  CardNumberElement,
+  CardExpiryElement,
+  CardCVCElement,
+} from 'react-stripe-elements';
+import styled from 'styled-components';
 import { firebase } from '../../firebase';
 import { useUser } from '../../context/auth-context';
 
@@ -53,21 +60,68 @@ const CheckoutForm = props => {
 
   if (location.pathname === '/cardform') {
     return (
-      <div className='checkout'>
-        <p>Where should we send the money?</p>
-        <CardElement style={{ fontSize: '2rem' }} />
+      <CardPage>
+        <h2>Where should we send the money?</h2>
+        <p>
+          Please note that we can only send money to debit cards at this time
+        </p>
+        <div style={{ width: '45%' }}>
+          <CardElement
+            style={{
+              base: {
+                fontSize: '1.5rem',
+                letterSpacing: '0.025em',
+                '::placeholder': {
+                  color: '#aab7c4',
+                },
+              },
+            }}
+          />
+        </div>
         <button onClick={submit}>Send</button>
-      </div>
+      </CardPage>
     );
   } else if (location.pathname.includes('/payloan')) {
     return (
-      <div className='checkout'>
-        <p>You're SUCH a good person</p>
-        <CardElement style={{ fontSize: '2rem' }} />
+      <CardPage>
+        <h2>You're SUCH a good person</h2>
+        <CardElement />
         <button onClick={payLoanSubmit}>Send</button>
-      </div>
+      </CardPage>
     );
   }
 };
 
 export default injectStripe(CheckoutForm);
+
+const CardPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+
+  button {
+    cursor: pointer;
+    width: 25%;
+    height: 30px;
+    font-size: 1.8rem;
+    margin: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background: black;
+    color: white;
+    transition: all 200ms linear;
+    &:hover {
+      background: white;
+      color: black;
+    }
+  }
+`;
