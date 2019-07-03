@@ -11,32 +11,32 @@ import LandingPage from './component/LandingPage';
 import Loan from './component/Loan';
 import { signout } from './context/auth-context';
 
-const Container = styled.div`
-  transition: box-shadow 0.3s;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background: #fff;
-  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.5s;
-  display: grid;
-  width: 100%;
-  max-width: 1220px;
-  height: 75%;
-  grid-gap: 1em;
-  margin: 0 auto;
-  margin-top: 2rem;
-  ${mq.small} {
-    border: 2px solid rebeccapurple;
-    background-color: yellow;
-  }
-`;
+// const Container = styled.div`
+//   transition: box-shadow 0.3s;
+//   border-radius: 10px;
+//   border: 1px solid #ccc;
+//   background: #fff;
+//   box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+//   transition: box-shadow 0.5s;
+//   display: flex;
+//   width: 100%;
+//   max-width: 1220px;
+//   height: 85%;
+//   padding: 10px;
+//   margin: 0 auto;
+//   margin-top: 2rem;
+//   ${mq.small} {
+//     border: 2px solid rebeccapurple;
+//     background-color: yellow;
+//   }
+// `;
 const AuthenticatedApp = () => {
   return (
     <Test>
       <Nav />
-      <Container>
-        <Routes />
-      </Container>
+      {/* <Container> */}
+      <Routes />
+      {/* </Container> */}
     </Test>
   );
 };
@@ -106,6 +106,55 @@ const NavWrapper = styled.header`
         color: green;
       }
     }
+`;
+
+const LinkWrapper = styled.div`
+  float: left;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  border-right: 1px solid #6c63fe;
+  height: 50px;
+  padding: 10px 30px;
+  & > * {
+    color: white;
+    text-decoration: none;
+  }
+  &:hover {
+    background: #6c63fe;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-content: center;
+  align-items: center;
+  float: right;
+  border-left: 1px solid #6c63fe;
+  height: 50px;
+  padding: 10px 30px;
+  & > * {
+    color: white;
+    font-family: 'Permanent Marker', cursive;
+    user-select: none;
+    font-size: 3rem;
+    margin-left: 5%;
+  }
+
+  nav {
+    font-size: 1.6rem;
+    color: white;
+    margin-right: 5%;
+    a {
+      color: white;
+      text-decoration: none;
+      transition: 300ms;
+      &:hover {
+        color: green;
+      }
+    }
+  &:hover {
+    background: #6c63fe;
   }
 `;
 
